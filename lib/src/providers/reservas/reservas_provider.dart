@@ -15,8 +15,14 @@ Future<dynamic> getReserva(String docID, String coleccion) async {
 class ReservaProvider extends ChangeNotifier {
   List<int> diasSemanaSoloNumero = [];
   List<DateTime> diasSemanaFechaCompleta = [];
+  bool loading = false;
   late int diaActual;
   final ReservaRepository reservaRepository = ReservaRepository();
+
+  void toggleLoad() {
+    loading = !loading;
+    notifyListeners();
+  }
 
   void initCalcDiasSemana() {
     DateTime ahora = DateTime.now();

@@ -19,7 +19,6 @@ class _QrGenerateScreenState extends State<QrGenerateScreen> {
   Widget build(BuildContext context) {
     final reservaProvider = context.watch<ReservaProvider>();
     final userProvider = context.watch<UserProvider>();
-    print(userProvider.user!.uid);
 
     final colors = Theme.of(context).colorScheme;
 
@@ -51,10 +50,10 @@ class _QrGenerateScreenState extends State<QrGenerateScreen> {
                     const Divider(),
                 itemBuilder: (BuildContext context, int index) {
                   final reserva = reservas[index];
-
+                  // modificar here
                   return ListTile(
                     title: Text(
-                      reserva.fecha,
+                      reserva.motivo,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -116,7 +115,7 @@ void showItemDetails(BuildContext context, ReservaModel reserva) {
                 ),
               ),
             ),
-            TextPair(title: 'Día:', content: reserva.dia),
+            TextPair(title: 'Día:', content: reserva.diaToString()),
             TextPair(
                 title: 'Motivo:',
                 content: reserva.motivo == '' ? 'No definido' : reserva.motivo),

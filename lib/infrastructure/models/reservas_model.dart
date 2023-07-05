@@ -1,18 +1,19 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gym_app/src/shared/data/semana_data.dart';
 
 class ReservaModel {
   String? idDoc;
   int bloque;
   bool confirmada;
-  String dia;
+  int dia;
   String entrada;
   String salida;
   String uid;
   String motivo;
   String? nameOfUser;
-  String fecha;
+  DateTime fecha;
   DateTime createdAt;
 
   ReservaModel({
@@ -38,7 +39,7 @@ class ReservaModel {
       salida: reserva['salida'],
       uid: reserva['uid'],
       motivo: reserva['motivo'],
-      fecha: reserva['fecha'],
+      fecha: (reserva['fecha'] as Timestamp).toDate(),
       createdAt: (reserva['createdAt'] as Timestamp).toDate(),
     );
   }
@@ -51,5 +52,9 @@ class ReservaModel {
 
   String confirmadaToString() {
     return confirmada ? 'Confirmada' : 'Por confirmar';
+  }
+
+  String diaToString() {
+    return nombres[dia];
   }
 }

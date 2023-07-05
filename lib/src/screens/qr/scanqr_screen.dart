@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:gym_app/infrastructure/models/reservas_model.dart';
 import 'package:gym_app/src/providers/providers.dart';
 import 'package:gym_app/src/screens/reservas/widgets/texto_rico.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanQRScreen extends StatefulWidget {
@@ -38,7 +37,6 @@ class _ScanQRScreenState extends State<ScanQRScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(

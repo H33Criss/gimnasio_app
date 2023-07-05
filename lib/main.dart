@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gym_app/config/firebase/firebase_app.dart';
 import 'package:gym_app/src/providers/providers.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'config/router/app_router.dart';
 import 'config/themes/main_theme.dart';
@@ -11,6 +12,7 @@ FirebaseService firebaseService = FirebaseService();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await firebaseService.setFirebaseApp();
+  await initializeDateFormatting('es_ES', null);
   runApp(const MyApp());
 }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_app/infrastructure/models/reservas_model.dart';
 import 'package:gym_app/src/providers/providers.dart';
+import 'package:gym_app/src/shared/data/semana_data.dart';
 import 'package:provider/provider.dart';
 
 class TestScreen extends StatefulWidget {
@@ -25,6 +26,7 @@ class _TestScreenState extends State<TestScreen> {
             stream: reservaProvider.getListOfReservas(userProvider.user!.uid),
             builder: (context, snapshot) {
               if (!snapshot.hasData) const CircularProgressIndicator();
+
               List<ReservaModel> reservas = snapshot.data ?? [];
               return Container(
                 color: Colors.blue,
@@ -35,7 +37,7 @@ class _TestScreenState extends State<TestScreen> {
                       child: Column(
                         children: [
                           Text(e.bloque.toString()),
-                          Text(e.dia),
+                          Text(e.diaToString()),
                           Text(e.entrada),
                           Text(e.salida),
                           Text(e.confirmada ? 'Confirmada' : 'Por Confirmar'),
@@ -53,22 +55,24 @@ class _TestScreenState extends State<TestScreen> {
             onPressed: () async {
               final reserva = await reservaProvider
                   .setConfirmarReservar('GvjZ7fOX1bCs6Vq6jAnF');
+              print(reserva);
             },
           ),
           FilledButton(
             child: const Text('Crear reserva'),
             onPressed: () async {
               DateTime now = DateTime.now();
-              //Añadir dias
+              final horario = hours[4];
+
               final newReserva = ReservaModel(
-                bloque: 1,
+                bloque: horario.bloque,
                 confirmada: false,
-                dia: 'Miercoles',
-                entrada: '9:35',
-                salida: '10:45',
+                dia: 1,
+                entrada: horario.entrada,
+                salida: horario.entrada,
                 uid: userProvider.user!.uid,
                 motivo: 'Recuperativo',
-                fecha: '11/11/1111',
+                fecha: reservaProvider.diasSemanaFechaCompleta[0],
                 createdAt: now,
               );
               await reservaProvider.createNewReserva(newReserva);
