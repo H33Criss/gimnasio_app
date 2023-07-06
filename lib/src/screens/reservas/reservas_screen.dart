@@ -15,7 +15,6 @@ class _ReservasScreenState extends State<ReservasScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reserva tu Hora'),
-        centerTitle: true,
       ),
       body: const Column(
         children: [

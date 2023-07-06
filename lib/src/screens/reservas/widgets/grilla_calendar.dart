@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gym_app/config/helpers/custom_dialogs.dart';
+import 'package:gym_app/config/helpers/handler_dialogs.dart';
+import 'package:gym_app/config/helpers/handler_estampillas.dart';
 import 'package:gym_app/config/helpers/validators_date.dart';
 import 'package:gym_app/infrastructure/models/reservas_model.dart';
 import 'package:gym_app/src/providers/providers.dart';
-import 'package:gym_app/src/screens/reservas/widgets/confirm_dialog.dart';
-import 'package:gym_app/src/screens/reservas/widgets/estampillas_reservas.dart';
 import 'package:provider/provider.dart';
 
 class GrillaCalendar extends StatelessWidget {
@@ -30,24 +30,37 @@ class GrillaCalendar extends StatelessWidget {
             List<int> columnas = List<int>.generate(5, (index) => index);
             return Row(
               children: columnas.map((j) {
+                final response = checkIfExistAnyReserva(reservas, i, j);
+                final responseEstampilla =
+                    handleEstampilla(response.reserva, j, i, reservaProvider);
+                final dialog = handleDialog(responseEstampilla.dialog);
+                final currentDay = reservaProvider.diasSemanaSoloNumero
+                        .indexOf(reservaProvider.diaActual) +
+                    1;
+                final onePerDay = response.existReservaPerDay &&
+                    currentDay == j &&
+                    response.reserva?.bloque != i;
                 return InkWell(
                   splashColor: colors.primary.withOpacity(.3),
                   onTap: () {
-                    final response = checkIfExistAnyReserva(reservas, i, j);
-                    if (!response.existsReserva) {
+                    if (onePerDay) {
+                      onePerDayDialog(context);
+                    } else if (!response.existsReserva && currentDay == j) {
                       confirmDialog(
                         context,
                         i,
                         j,
                         reservaProvider.diasSemanaFechaCompleta,
                       );
+                    } else {
+                      dialog(context);
                     }
                   },
                   onLongPress: () async {
-                    final response = checkIfExistAnyReserva(reservas, i, j);
                     if (response.existsReserva && response.reserva != null) {
-                      await reservaProvider
-                          .deleteReserva(response.reserva?.idDoc ?? '');
+                      //Este dialog es el unico que recibe 2 parametros extras
+                      deleteConfirmDialog(
+                          context, reservaProvider, response.reserva!);
                     }
                   },
                   child: Container(
@@ -60,7 +73,12 @@ class GrillaCalendar extends StatelessWidget {
                     width: size.width * 0.85 / 5,
                     height: heightGrilla,
                     // child: Container(),
-                    child: _handleEstampilla(reservas, j, i, reservaProvider),
+                    child: onePerDay
+                        ? const Icon(
+                            Icons.deselect_outlined,
+                            color: Colors.grey,
+                          )
+                        : responseEstampilla.estampilla,
                   ),
                 );
               }).toList(),
@@ -70,65 +88,4 @@ class GrillaCalendar extends StatelessWidget {
       },
     );
   }
-}
-
-Widget _handleEstampilla(
-    List<ReservaModel> reservas, int j, int i, ReservaProvider provider) {
-  //i -> la fila, tiene sincronia con el bloque
-  //j -> la columna, tiene sincronia con el dia
-  Widget estampilla = const EstampillasReservas(
-    estampilla: Estampillas.vacio,
-  );
-  final int diaActual =
-      provider.diasSemanaSoloNumero.indexOf(provider.diaActual);
-
-  final response = checkIfExistAnyReserva(reservas, i, j);
-  final r = response.reserva;
-  bool reservado = r?.bloque == i && r?.dia == j;
-
-  //Reserva realizada en los tiempos correctos
-  if (reservado && r != null) {
-    estampilla = const EstampillasReservas(
-      estampilla: Estampillas.reservado,
-    );
-  }
-  //Un dia que ha concluido, ya ha pasado
-  if (j < diaActual && reservado && r != null) {
-    estampilla = const EstampillasReservas(
-      estampilla: Estampillas.huboReserva,
-    );
-  }
-  //Una reserva que coincide con el dia actual
-  if (j == diaActual && reservado && r != null) {
-    estampilla = const EstampillasReservas(
-      estampilla: Estampillas.reservaEnCurso,
-    );
-  }
-  //Si hay una reserva en el futuro con mas 2 dias de lejania
-  if (j >= diaActual + 2 && reservado && r != null) {
-    estampilla = const EstampillasReservas(
-      estampilla: Estampillas.habraReserva,
-    );
-  }
-  //Pedir reservas en el mismo dia
-  if (j == diaActual && !reservado) {
-    estampilla = const EstampillasReservas(
-      estampilla: Estampillas.consulta,
-    );
-  }
-  //Una reserva vieja en la semana
-  if (j < diaActual && !reservado) {
-    estampilla = const EstampillasReservas(
-      estampilla: Estampillas.concluido,
-    );
-  }
-
-  //Se bloquea el reservas para dia que estan mas de 2 dias alejas del dia actual
-  if (j >= diaActual + 2 && !reservado) {
-    estampilla = const EstampillasReservas(
-      estampilla: Estampillas.bloqueado,
-    );
-  }
-
-  return estampilla;
 }

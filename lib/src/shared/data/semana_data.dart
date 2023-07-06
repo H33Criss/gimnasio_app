@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:gym_app/src/screens/reservas/widgets/estampillas_reservas.dart';
+
 class Hour {
   final String entrada;
   final String salida;
@@ -7,6 +10,16 @@ class Hour {
     required this.entrada,
     required this.salida,
     required this.bloque,
+  });
+}
+
+class ResponseHandleEstampilla {
+  final Widget estampilla;
+  final Estampillas dialog;
+
+  ResponseHandleEstampilla({
+    required this.estampilla,
+    required this.dialog,
   });
 }
 

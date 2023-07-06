@@ -9,6 +9,7 @@ enum Estampillas {
   habraReserva,
   consulta,
   reservaEnCurso,
+  onePerDay,
 }
 
 class EstampillasReservas extends StatelessWidget {
@@ -86,11 +87,12 @@ class EstampillasReservas extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.safety_check_outlined,
-              color: colors.primary,
+              Icons.health_and_safety_outlined,
+              color: colors.onPrimaryContainer,
               size: 28,
             ),
-            Text('Reservando', style: textStyles.labelSmall)
+            Text('Te', style: textStyles.labelSmall),
+            Text('reservaron', style: textStyles.labelSmall),
           ],
         );
       case Estampillas.consulta:
@@ -103,6 +105,16 @@ class EstampillasReservas extends StatelessWidget {
               size: 28,
             ),
             Text('Consulta', style: textStyles.labelSmall)
+          ],
+        );
+      case Estampillas.onePerDay:
+        return const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.deselect_outlined,
+              color: Colors.grey,
+            )
           ],
         );
       default:
