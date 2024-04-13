@@ -67,12 +67,12 @@ class _TestScreenState extends State<TestScreen> {
               final newReserva = ReservaModel(
                 bloque: horario.bloque,
                 confirmada: false,
-                dia: 1,
+                dia: 2,
                 entrada: horario.entrada,
                 salida: horario.entrada,
                 uid: userProvider.user!.uid,
                 motivo: 'Recuperativo',
-                fecha: reservaProvider.diasSemanaFechaCompleta[0],
+                fecha: reservaProvider.diasSemanaFechaCompleta[2],
                 createdAt: now,
               );
               await reservaProvider.createNewReserva(newReserva);
