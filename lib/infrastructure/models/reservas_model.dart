@@ -50,6 +50,18 @@ class ReservaModel {
     }
   }
 
+  int get mes {
+    return fecha.month;
+  }
+
+  int get anio {
+    return fecha.year;
+  }
+
+  int get numeroDia {
+    return fecha.day;
+  }
+
   String confirmadaToString() {
     return confirmada ? 'Confirmada' : 'Por confirmar';
   }

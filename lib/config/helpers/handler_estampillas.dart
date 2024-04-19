@@ -12,10 +12,15 @@ ResponseHandleEstampilla handleEstampilla(
     estampilla: Estampillas.vacio,
   );
   Estampillas dialog = Estampillas.reservado;
+  DateTime now = DateTime.now();
   final int diaActual =
       provider.diasSemanaSoloNumero.indexOf(provider.diaActual);
 
-  bool reservado = r?.bloque == i && r?.dia == j;
+  bool reservado = r?.bloque == i &&
+      r?.dia == j &&
+      r?.anio == now.year &&
+      // r?.dia == now.day &&
+      r?.mes == now.month;
 
   //Reserva realizada en los tiempos correctos
   if (reservado && r != null) {

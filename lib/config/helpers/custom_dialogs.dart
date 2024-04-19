@@ -146,7 +146,7 @@ void reservadoDialog(BuildContext context) {
     barrierDismissible: false,
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Reserva para mañana'),
+      title: const Text('Reserva Ingresada'),
       content: const Text(
           'Quedan 24 horas o menos para esta reserva. Consulta los detalles de esta reserva en el menu "Mis Horas" en la pagina principal.'),
       actions: [
