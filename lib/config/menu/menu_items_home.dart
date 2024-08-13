@@ -39,10 +39,10 @@ const List<MenuItem> menuItems = [
     link: '/horas',
     icon: Icons.calendar_today,
   ),
-  MenuItem(
-    title: 'Test',
-    subTitle: 'Tests',
-    link: '/test',
-    icon: Icons.local_bar_sharp,
-  ),
+  // MenuItem(
+  //   title: 'Test',
+  //   subTitle: 'Tests',
+  //   link: '/test',
+  //   icon: Icons.local_bar_sharp,
+  // ),
 ];

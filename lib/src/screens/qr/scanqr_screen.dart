@@ -40,7 +40,11 @@ class _ScanQRScreenState extends State<ScanQRScreen> {
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text(
+          'Escanear QR',
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: colors.primary,
         foregroundColor: colors.surface,
@@ -54,6 +58,7 @@ class _ScanQRScreenState extends State<ScanQRScreen> {
   }
 
   Widget _buildQrView(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
             MediaQuery.of(context).size.height < 400)
         ? 150.0
@@ -63,7 +68,7 @@ class _ScanQRScreenState extends State<ScanQRScreen> {
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
       overlay: QrScannerOverlayShape(
-          borderColor: Colors.red,
+          borderColor: colors.primary,
           borderRadius: 10,
           borderLength: 30,
           borderWidth: 10,

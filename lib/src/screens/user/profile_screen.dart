@@ -31,15 +31,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Size size = MediaQuery.of(context).size;
     final userProvider = context.watch<UserProvider>();
     return Scaffold(
+      extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
-          'Perfil',
+          'Test',
           style: TextStyle(
             color: Colors.white,
           ),
         ),
+        elevation: 0,
         backgroundColor: colors.primary,
       ),
       floatingActionButton: FloatingActionButton(

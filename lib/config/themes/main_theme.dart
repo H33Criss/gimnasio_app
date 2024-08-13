@@ -24,6 +24,7 @@ class MainTheme {
         colorSchemeSeed: colorList[selectedColor],
         appBarTheme: const AppBarTheme(
           centerTitle: false,
+          elevation: 0,
         ),
         textTheme: TextTheme(
           bodyLarge: TextStyle(color: darkMode ? Colors.white : Colors.black),

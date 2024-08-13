@@ -24,7 +24,9 @@ class _QrGenerateScreenState extends State<QrGenerateScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Entrada QR'),
+          title: const Text(
+            'Entrada QR',
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: colors.primary,
